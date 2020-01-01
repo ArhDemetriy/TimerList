@@ -5,6 +5,7 @@ import android.media.ToneGenerator
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -109,5 +110,11 @@ class MainActivity : AppCompatActivity() {
         }
         if (metaTimers.timerRunned xor timerSwitch.isChecked) metaTimers.timerRunned = timerSwitch.isChecked
         //if (metaTimers.timerRunned) timer.start()
+
+        //metaTimers.testTimerRunned.value = true
+        val s: String = if ( metaTimers.testTimerRunned.value ) "true" else "false"
+        val myToast = Toast.makeText( this, s, Toast.LENGTH_SHORT )
+        myToast.show()
+
     }
 }

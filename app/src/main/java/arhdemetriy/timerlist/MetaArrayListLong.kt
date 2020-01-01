@@ -106,13 +106,13 @@ class MetaArrayListLong : ViewModel() {
     val testTimerRunned: MineIOonLiveData<Boolean> by lazy {
         MineIOonLiveData<Boolean>(
             get = {
-                if (count <= 0) pTimerRunned.value = false
-                pTimerRunned.value!!
+
+                it
             },
             set = {
-                pTimerRunned.value = it && arrayTimers.count() > 0
-                it && arrayTimers.count() > 0
-            }
+                it
+            },
+            nullFlag = false
         )
     }
 
