@@ -1,0 +1,2 @@
+include ':app', ':testrecyclerview', ':testviewmodel'
+rootProject.name='TimerList'

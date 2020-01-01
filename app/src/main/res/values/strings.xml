@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TimerList</string>
+    <string name="delete_last_timer">Delete last timer</string>
+    <string name="add_nev_timer">Add nev timer</string>
+    <string name="defaultTimer">0</string>
+    <dimen name="margin10">10dp</dimen>
+</resources>

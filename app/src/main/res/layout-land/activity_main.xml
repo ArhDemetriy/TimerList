@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/timerView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/margin10"
+        android:layout_marginRight="@dimen/margin10"
+        android:layout_weight="2"
+        android:text="@string/defaultTimer" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/writterTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_margin="@dimen/margin10"
+            android:layout_weight="0"
+            android:ems="10"
+            android:importantForAutofill="no"
+            android:inputType="time"
+            android:text="@string/defaultTimer" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/addButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin10"
+                android:layout_marginStart="24dp"
+                android:layout_weight="1"
+                android:background="@android:drawable/ic_input_add"
+                android:onClick="adder"
+                android:text="@string/add_nev_timer" />
+
+            <Button
+                android:id="@+id/delButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin10"
+                android:layout_marginEnd="24dp"
+                android:layout_weight="1"
+                android:background="@android:drawable/ic_delete"
+                android:onClick="delleter"
+                android:text="@string/delete_last_timer" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/workedTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/margin10"
+            android:layout_weight="0"
+            android:text="@string/defaultTimer" />
+
+        <Switch
+            android:id="@+id/timerSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/margin10"
+            android:layout_weight="0"
+            android:checked="false"
+            android:onClick="ceckedTimerSwitch"
+            android:text="Timer ON?" />
+
+    </LinearLayout>
+
+</LinearLayout>
