@@ -106,7 +106,6 @@ class MetaArrayListLong : ViewModel() {
     val testTimerRunned: MineIOonLiveData<Boolean> by lazy {
         MineIOonLiveData<Boolean>(
             get = {
-
                 it
             },
             set = {
