@@ -103,7 +103,18 @@ class MetaArrayListLong : ViewModel() {
         }
         set(value) {pTimerRunned.value = value && arrayTimers.count() > 0}
 
-
+    val testTimerRunned: MineIOonLiveData<Boolean> by lazy {
+        MineIOonLiveData<Boolean>(
+            get = {
+                if (count <= 0) pTimerRunned.value = false
+                pTimerRunned.value!!
+            },
+            set = {
+                pTimerRunned.value = it && arrayTimers.count() > 0
+                it && arrayTimers.count() > 0
+            }
+        )
+    }
 
 
     private val pPosActiveTimer: MutableLiveData<Int> = MutableLiveData<Int>()
