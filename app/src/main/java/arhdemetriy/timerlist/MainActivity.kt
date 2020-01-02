@@ -21,34 +21,19 @@ class MainActivity : AppCompatActivity() {
         //setContentView(R.layout.activity_main)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
 
-        metaTimers.observeCount(this, Observer {
+        metaTimers.count.observeValue(this, Observer {
             render()
-            if (it <= 0) metaTimers.timerRunned = false
+            if (it <= 0) metaTimers.timerRunned.value = false
         })
 
-        metaTimers.observeFirstTimer(this, Observer {
-            //render()
-        })
-
-        metaTimers.observePosMainTimer(this, Observer {
-            //render()
-        })
-
-        metaTimers.observeMainTimer(this, Observer {
-           // render()
-        })
-
-        metaTimers.observeTimerRunned(this, Observer {
+        metaTimers.timerRunned.observeValue(this, Observer {
             if (it) timer.start() else timer.cancel()
             timerSwitch.isChecked = it
         })
 
-        metaTimers.observeActiveTimer(this, Observer {
+        metaTimers.activeTimer.observeValue(this, Observer {
             workedTimer.text = it.toString()
         })
-
-
-
     }
 
     private fun render(){
@@ -79,9 +64,6 @@ class MainActivity : AppCompatActivity() {
         if (s != "0") {
             metaTimers.addTimerAt(s.toLong())
         }
-        metaTimers.posMainTimer=metaTimers.count-1
-
-
     }
 
     fun delleter (viev: View){
@@ -90,12 +72,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun timerTick (){
 
-        if (metaTimers.count <= 0) {
-            metaTimers.timerRunned=false
-            timer.cancel()
+        if (metaTimers.count.value <= 0) {
+            metaTimers.timerRunned.value=false
             return}
 
-        else if (metaTimers.activeTimer <=0 ) {
+        else if (metaTimers.activeTimer.value <=0 ) {
             val tg = ToneGenerator(AudioManager.STREAM_ALARM,100)
             tg.startTone(ToneGenerator.TONE_CDMA_ABBR_ALERT,500)
         }
@@ -103,12 +84,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun ceckedTimerSwitch(viev: View){
-        if (timerSwitch.isChecked) {
-            //metaTimers.posMainTimer = 0
-           // metaTimers.posActiveTimer = 0
-        }
-        if (metaTimers.timerRunned xor timerSwitch.isChecked) metaTimers.timerRunned = timerSwitch.isChecked
-        //if (metaTimers.timerRunned) timer.start()
+        if (metaTimers.timerRunned.value xor timerSwitch.isChecked) metaTimers.timerRunned.value = timerSwitch.isChecked
     }
 }
 
