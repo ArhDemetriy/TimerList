@@ -4,6 +4,7 @@ import android.media.AudioManager
 import android.media.ToneGenerator
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -14,17 +15,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-   private val metaTimers: MetaArrayListLong by lazy { ViewModelProviders.of(this).get(MetaArrayListLong::class.java) }
+    private val metaTimers: MetaArrayListLong by lazy { ViewModelProviders.of(this).get(MetaArrayListLong::class.java) }
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
-
-        metaTimers.count.observeValue(this, Observer {
-            render()
-            if (it <= 0) metaTimers.timerRunned.value = false
-        })
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
 
         metaTimers.timerRunned.observeValue(this, Observer {
             if (it) timer.start() else timer.cancel()
@@ -34,13 +31,21 @@ class MainActivity : AppCompatActivity() {
         metaTimers.activeTimer.observeValue(this, Observer {
             workedTimer.text = it.toString()
         })
+
+        metaTimers.count.observeValue(this, Observer {
+            render()
+            if (it <= 0) metaTimers.timerRunned.value = false
+        })
+
     }
 
     private fun render(){
 
+        Log.d("render","begin")
+
         var s: String = ""
-        /*if (it > 0)*/ metaTimers.getArrayforEach { n -> s += "$n\n" }
-        timerView.text = s
+        metaTimers.getArrayforEach { n -> s += "$n\n" }
+        binding.listTimers = s
 
     }
 
@@ -84,7 +89,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun ceckedTimerSwitch(viev: View){
-        if (metaTimers.timerRunned.value xor timerSwitch.isChecked) metaTimers.timerRunned.value = timerSwitch.isChecked
+        val temp = timerSwitch.isChecked
+        if (metaTimers.timerRunned.value xor temp) metaTimers.timerRunned.value = temp
     }
 }
 

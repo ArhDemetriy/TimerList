@@ -1,5 +1,6 @@
 package arhdemetriy.timerlist
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 
 class MetaArrayListLong : ViewModel() {
@@ -9,36 +10,35 @@ class MetaArrayListLong : ViewModel() {
 
     //сущности на которые будут вешатся observers и public поля через которые читаются/меняются хранимые ими значения
 
-    val count: MineIOonLiveData<Int> by lazy {
+    var t: Int = 1
+
+    val count: MineIOonLiveData<Int> =
         MineIOonLiveData<Int>(
-            get = {
+            _get = {
                 arrayTimers.count()
             },
             nullFlag = -1
         )
-    }
 
-    val firstTimer: MineIOonLiveData<Long> by lazy {
+
+    val firstTimer: MineIOonLiveData<Long> =
         MineIOonLiveData<Long>(
-            get = {
+            _get = {
                 if (count.value <= 0) {
                     -1
                 } else {
                     arrayTimers.get(0)
                 }
             },
-            set = {
+            _set = {
                 if (count.value > 0) {
                     arrayTimers.set(0, it)
-                }else{
-                    arrayTimers.add(it)
-                    count.value = arrayTimers.count()
-                }
-                it
+                    it
+                } else -1
             },
             nullFlag = -1
         )
-    }
+
 
     private val l: (Int) -> Int = {
         when {
@@ -49,16 +49,16 @@ class MetaArrayListLong : ViewModel() {
         }
     }
 
-    val posMainTimer: MineIOonLiveData<Int> by lazy {
+    val posMainTimer: MineIOonLiveData<Int> =
         MineIOonLiveData<Int>(
-            get = l,
+            _get = l,
             nullFlag = -1
         )
-    }
 
-    val mainTimer: MineIOonLiveData<Long> by lazy {
+
+    val mainTimer: MineIOonLiveData<Long> =
         MineIOonLiveData<Long>(
-            get = {
+            _get = {
                 if (count.value<=0 || posMainTimer.value < 0 //|| posMainTimer.value >= count.value
                 ) {
                     0
@@ -67,7 +67,7 @@ class MetaArrayListLong : ViewModel() {
                     arrayTimers[posMainTimer.value]
                 }
             },
-            set = {
+            _set = {
                 if (count.value<=0 || posMainTimer.value < 0 //|| posMainTimer.value >= count.value
                 ) {
                     0
@@ -79,41 +79,44 @@ class MetaArrayListLong : ViewModel() {
             },
             nullFlag = -1
         )
-    }
 
-    val timerRunned: MineIOonLiveData<Boolean> by lazy {
+
+    val timerRunned: MineIOonLiveData<Boolean> =
         MineIOonLiveData<Boolean>(
-            get = {
-                (count.value > 0) && it
+            _get = {
+                Log.v("timerRunned","get begin")
+                (arrayTimers.count() > 0) && it
+                Log.v("timerRunned","get end")
+                (arrayTimers.count() > 0) && it
             },
             nullFlag = false
         )
-    }
 
-    val posActiveTimer: MineIOonLiveData<Int> by lazy {
+
+    val posActiveTimer: MineIOonLiveData<Int> =
         MineIOonLiveData<Int>(
-            get = l,
+            _get = l,
             nullFlag = -1
         )
-    }
 
-    val activeTimer: MineIOonLiveData<Long> by lazy {
+
+    val activeTimer: MineIOonLiveData<Long> =
         MineIOonLiveData<Long>(
-            get = {
+            _get = {
                 if (it >= 0) it else 0},
             nullFlag = -1
         )
-    }
 
-  /*  init {/*
-        pCount.value=0
-        pTimerRunned.value=false
-        pFirstTimer.value=0
-        pPosMainTimer.value=0
-        pMainTimer.value=0
-        pPosActiveTimer.value=0
-        pActiveTimer.value=0*/
-    }*/
+
+    init {
+        count.value
+        timerRunned.value=false
+        //firstTimer.value=0
+        posMainTimer.value=0
+        //mainTimer.value=0
+        posActiveTimer.value=0
+        activeTimer.value=0
+    }
 
     //методы редактирования хранилища таймеров
     fun addTimerAt(t: Long = 0,x: Int = arrayTimers.count()): Unit {
@@ -122,15 +125,22 @@ class MetaArrayListLong : ViewModel() {
                 timerRunned.value = false
                 return
                 }
-            x <= 0 -> arrayTimers.add(0,t)
+            x <= 0 -> {
+                arrayTimers.add(0,t)
+                activeTimer.value = t
+            }
             x >= (arrayTimers.count()) -> arrayTimers.add(t)
 
             else -> arrayTimers.add(x,t)
         }
-        count.value = arrayTimers.count()
 
-        if (x <= posMainTimer.value) posMainTimer.value++
-        mainTimer.value = arrayTimers[posMainTimer.value]
+        var t = posMainTimer.value
+
+        Log.d("render","begin $t")
+        if (t >= x && t < arrayTimers.count()-1 ) {
+            posMainTimer.value = ++t
+            mainTimer.value = arrayTimers[t]
+        }
     }
 
     fun delTimerAt(x: Int = arrayTimers.count()-1): Unit {
@@ -143,10 +153,13 @@ class MetaArrayListLong : ViewModel() {
             x >= arrayTimers.count() -> arrayTimers.removeAt(arrayTimers.count()-1)
             else -> arrayTimers.removeAt(x)
         }
-        count.value = arrayTimers.count()
 
-        if (x <= posMainTimer.value) posMainTimer.value--
-        mainTimer.value = arrayTimers[posMainTimer.value]
+        var t = posMainTimer.value
+        if (x <= t) t--
+        if (arrayTimers.count() > 0 && t >= 0){
+            posMainTimer.value = t
+            mainTimer.value = arrayTimers[t]
+        }
     }
 
     //метод вызываемый таймером
@@ -156,6 +169,8 @@ class MetaArrayListLong : ViewModel() {
             return
         } else if (activeTimer.value <= 0) {
             if (posActiveTimer.value >= arrayTimers.count()-1) {
+                posActiveTimer.value=0
+                activeTimer.value=arrayTimers[0]
                 timerRunned.value = false
                 return
             } else {
