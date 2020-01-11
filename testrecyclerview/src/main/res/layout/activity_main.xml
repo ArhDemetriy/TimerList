@@ -7,9 +7,10 @@
     tools:context=".MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/userList"
+        android:id="@+id/timerList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/user_item"
-        tools:itemCount="12"/>
+        android:background="@android:color/background_dark"
+        tools:itemCount="3"
+        tools:listitem="@layout/timer_item" />
 </androidx.constraintlayout.widget.ConstraintLayout>

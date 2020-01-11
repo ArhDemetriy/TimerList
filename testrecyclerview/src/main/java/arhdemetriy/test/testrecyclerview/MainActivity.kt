@@ -1,8 +1,6 @@
 package arhdemetriy.test.testrecyclerview
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -18,31 +16,33 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //инициализируем адаптер и присваиваем его списку
-        val adapter = UserAdapter()
-        userList.layoutManager = LinearLayoutManager(this)
-        userList.adapter = adapter
+
+        timerList.layoutManager = LinearLayoutManager(this)
+        val adapt = TimerAdapter()
+        timerList.adapter = adapt
 
         //подписываем адаптер на изменения списка
+
         userViewModel.getListUsers().observe(this, Observer {
-            it?.let {
-                adapter.refreshUsers(it)
-            }
+            adapt.refreshUsers(it)
         })
+
+        userViewModel.getListUsers().value = fakeValue(70)
+
+
+
     }
 
-    //создаем меню
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    //при нажатии пункта меню Refresh обновляем список
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId) {
-            R.id.refresh -> {
-                userViewModel.updateListUsers()
-            }
+    private fun fakeValue(n: Int): ArrayList<BaseTimer>{
+        var i: Long = n.toLong()
+        val a: ArrayList<BaseTimer> = ArrayList()
+        var t: BaseTimer = BaseTimer(i--)
+        repeat(n) {
+            a.add(t)
+            t = BaseTimer(i--)
         }
-        return super.onOptionsItemSelected(item)
+
+        return a
     }
 }
+

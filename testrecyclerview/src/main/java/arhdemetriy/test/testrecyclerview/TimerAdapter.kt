@@ -4,39 +4,39 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.user_item.view.*
+import kotlinx.android.synthetic.main.timer_item.view.*
 
-class UserAdapter : RecyclerView.Adapter<UserAdapter.UserHolder>() {
+class TimerAdapter : RecyclerView.Adapter<TimerAdapter.UserHolder>() {
 
-    private var users: List<User> = ArrayList()
+    private var timers: ArrayList<BaseTimer> = ArrayList()
 
     //создает ViewHolder и инициализирует views для списка
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserHolder {
         return UserHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.user_item, parent, false)
+                .inflate(R.layout.timer_item, parent, false)
         )
     }
 
     //связывает views с содержимым
     override fun onBindViewHolder(viewHolder: UserHolder, position: Int) {
-        viewHolder.bind(users[position])
+        viewHolder.bind(timers[position])
     }
 
-    override fun getItemCount() = users.size
+    override fun getItemCount() = timers.size
 
     //передаем данные и оповещаем адаптер о необходимости обновления списка
-    fun refreshUsers(users: List<User>) {
-        this.users = users
+    fun refreshUsers(timers: ArrayList<BaseTimer>) {
+        this.timers = timers
         notifyDataSetChanged()
     }
 
 
     //внутренний класс ViewHolder описывает элементы представления списка и привязку их к RecyclerView
     class UserHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(user: User) = with(itemView) {
-            userName.text = user.name
-            userDescription.text = user.description
+        fun bind(timer: BaseTimer) = with(itemView) {
+            mashinTimer.setText(timer.longTimer.toString())
+            humanTimer.setText(timer.strTimer)
         }
     }
 }

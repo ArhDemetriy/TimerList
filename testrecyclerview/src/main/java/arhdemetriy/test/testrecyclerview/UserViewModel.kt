@@ -5,17 +5,16 @@ import androidx.lifecycle.ViewModel
 
 class UserViewModel : ViewModel() {
 
-    var userList : MutableLiveData<List<User>> = MutableLiveData()
+    private var timerList : MutableLiveData<ArrayList<BaseTimer>> = MutableLiveData()
 
     //инициализируем список и заполняем его данными пользователей
     init {
-        userList.value = UserData.getUsers()
+        timerList.value = ArrayList()
     }
 
-    fun getListUsers() = userList
+    fun getListUsers() = timerList
 
     //для обновления списка передаем второй список пользователей
     fun updateListUsers() {
-        userList.value = UserData.getAnotherUsers()
     }
 }
