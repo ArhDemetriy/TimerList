@@ -31,6 +31,13 @@ class TimerAdapter : RecyclerView.Adapter<TimerAdapter.UserHolder>() {
         notifyDataSetChanged()
     }
 
+    fun setTimerByIndex(index: Int, nevTimer: Long): Long {
+        if (index !in 0 until timers.size) return -1
+        val oldTimer = timers[index].longTimer
+        timers[index].longTimer = nevTimer
+        notifyItemChanged(index)
+        return oldTimer
+    }
 
     //внутренний класс ViewHolder описывает элементы представления списка и привязку их к RecyclerView
     class UserHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
