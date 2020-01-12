@@ -20,12 +20,14 @@ class MineIOonLiveData<T>(private val get: (T) -> T, private val nullFlag: T){
         setter = {
             Log.d("MineIOonLiveData","set begin ${setteblyValue.toString()} ${pValue.value.toString()} => ${tempSet.toString()}")
             val t = tempSet(setteblyValue)
-            if (pValue.value != t) pValue.value = t
+            //if (pValue.value != t)
+                pValue.value = t
             Log.d("MineIOonLiveData","set end ${setteblyValue.toString()} ${pValue.value.toString()} <= ${tempSet.toString()}")
         }
     }
 
     fun observeValue(lifecycleOwner: LifecycleOwner, observer: Observer<in T>) = pValue.observe(lifecycleOwner,observer)
+
     var value: T
         get() {
             Log.d("MineIOonLiveData","get begin ${pValue.value.toString()} => ${get.toString()}")

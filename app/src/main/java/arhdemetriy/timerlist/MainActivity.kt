@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         var s: String = ""
         metaTimers.getArrayforEach { n -> s += "$n\n" }
-        binding.listTimers = s
+        timerView.text = s
 
     }
 
@@ -89,8 +89,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun ceckedTimerSwitch(viev: View){
-        val temp = timerSwitch.isChecked
-        if (metaTimers.timerRunned.value xor temp) metaTimers.timerRunned.value = temp
+        val t0 = metaTimers.timerRunned.value
+        val t1 = timerSwitch.isChecked
+        Log.d("ceckedTimerSwitch","begin $t0, $t1")
+        if (t0 xor t1) metaTimers.timerRunned.value = t1
     }
 }
 
