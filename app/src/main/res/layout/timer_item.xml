@@ -15,8 +15,9 @@
         android:layout_marginEnd="8dp"
         android:background="#33691E"
         android:ems="10"
+        android:importantForAutofill="no"
         android:inputType="time"
-        android:text="0"
+        android:text="@string/defaultTimer"
         android:textAlignment="center" />
 
     <EditText
@@ -30,7 +31,8 @@
         android:layout_marginBottom="8dp"
         android:background="#004D40"
         android:ems="10"
+        android:importantForAutofill="no"
         android:inputType="numberSigned"
-        android:text="0"
+        android:text="@string/defaultTimer"
         android:textAlignment="center" />
 </RelativeLayout>

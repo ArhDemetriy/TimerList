@@ -11,10 +11,7 @@
         <variable
             name="listTimers"
             type="String" />
-
     </data>
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,25 +20,25 @@
 
         <EditText
             android:id="@+id/writterTimer"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|top"
             android:layout_margin="@dimen/margin10"
-            android:layout_weight="0"
             android:ems="10"
+            android:importantForAutofill="no"
             android:inputType="time"
             android:text="@string/defaultTimer"
-            android:importantForAutofill="no" />
+            android:textAlignment="center" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/addButton"
-                android:layout_width="wrap_content"
+                style="@android:style/Widget.DeviceDefault.Button"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin10"
                 android:layout_marginStart="24dp"
@@ -52,7 +49,8 @@
 
             <Button
                 android:id="@+id/delButton"
-                android:layout_width="wrap_content"
+                style="@android:style/Widget.DeviceDefault.Button"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin10"
                 android:layout_marginEnd="24dp"
@@ -60,17 +58,16 @@
                 android:background="@android:drawable/ic_delete"
                 android:onClick="delleter"
                 android:text="@string/delete_last_timer" />
-
         </LinearLayout>
 
         <TextView
             android:id="@+id/workedTimer"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/margin10"
-            android:layout_weight="0"
-            android:text="0" />
+            android:text="@string/defaultTimer"
+            android:textAlignment="center" />
 
         <Switch
             android:id="@+id/timerSwitch"
@@ -78,10 +75,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/margin10"
-            android:layout_weight="0"
             android:checked="false"
             android:onClick="ceckedTimerSwitch"
-            android:text="Timer ON?" />
+            android:text="@string/timerSwitchCaption" />
 
         <TextView
             android:id="@+id/timerView"
@@ -89,17 +85,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/margin10"
-            android:layout_weight="0"
-            android:text="0"
+            android:text="@string/defaultTimer"
             android:textAlignment="center" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/timerList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             tools:itemCount="1"
             tools:listitem="@layout/timer_item" />
-
     </LinearLayout>
 </layout>
