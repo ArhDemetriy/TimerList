@@ -4,5 +4,4 @@
     <string name="add_nev_timer">Add nev timer</string>
     <string name="defaultTimer">0</string>
     <string name="timerSwitchCaption">Timer ON?</string>
-    <dimen name="margin10">10dp</dimen>
 </resources>

@@ -79,15 +79,6 @@
             android:onClick="ceckedTimerSwitch"
             android:text="@string/timerSwitchCaption" />
 
-        <TextView
-            android:id="@+id/timerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/margin10"
-            android:text="@string/defaultTimer"
-            android:textAlignment="center" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/timerList"
             android:layout_width="match_parent"

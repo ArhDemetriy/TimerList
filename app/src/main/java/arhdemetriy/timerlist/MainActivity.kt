@@ -10,18 +10,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import arhdemetriy.timerlist.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.timer_item.view.*
 
 class MainActivity : AppCompatActivity() {
 
     private val metaTimers: MetaArrayListLong by lazy { ViewModelProviders.of(this).get(MetaArrayListLong::class.java) }
+    private val adapt = TimerAdapter()
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+
+        timerList.layoutManager = LinearLayoutManager(this)
+        timerList.adapter = adapt
 
         metaTimers.timerRunned.observeValue(this, Observer {
             if (it) timer.start() else timer.cancel()
@@ -40,13 +46,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun render(){
-
-        Log.d("render","begin")
-
-        var s: String = ""
-        metaTimers.getArrayforEach { n -> s += "$n\n" }
-        timerView.text = s
-
+        val a: ArrayList<BaseTimer> = ArrayList()
+        metaTimers.getArrayforEach { n -> a.add(BaseTimer(n))}
+        adapt.refreshTimers(a)
     }
 
     private var m: Long = 0
@@ -94,6 +96,17 @@ class MainActivity : AppCompatActivity() {
         Log.d("ceckedTimerSwitch","begin $t0, $t1")
         if (t0 xor t1) metaTimers.timerRunned.value = t1
     }
+
+    fun clickOnMascineTimer(view: View): Unit {
+        Log.v("clickOnMascineTimer","step 0 ${view.toString()}")
+        val pos = timerList.getChildAdapterPosition(view)
+        Log.v("clickOnMascineTimer","step 1 $pos")
+
+        with(view) {
+            adapt.setTimerByIndex(pos,mashinTimer.text.toString().toLong())
+        }
+    }
+
 }
 
 

@@ -186,4 +186,5 @@ class MetaArrayListLong : ViewModel() {
     //чтение массива
     fun getArrayforEach (a: (Long) -> Unit) = arrayTimers.forEach(a)
 
+    fun getArray() = arrayTimers
 }
