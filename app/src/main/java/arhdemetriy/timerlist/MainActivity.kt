@@ -98,12 +98,23 @@ class MainActivity : AppCompatActivity() {
 
     fun clickOnMascineTimer(view: View): Unit {
         Log.v("clickOnMascineTimer","step 0 ${view.toString()}")
-        val pos = timerList.getChildAdapterPosition(view)
+        val pos = timerList.getChildAdapterPosition(view.parent as View)
         Log.v("clickOnMascineTimer","step 1 $pos")
-
+        metaTimers.posMainTimer.value = pos
         with(view) {
-            adapt.setTimerByIndex(pos,mashinTimer.text.toString().toLong())
+            val t = mashinTimer.text.toString().toLong()
+            adapt.setTimerByIndex(pos,t)
+            metaTimers.mainTimer.value = t
+            if (metaTimers.posActiveTimer.value == pos)
+                metaTimers.activeTimer.value = t
         }
     }
+
+    fun clickOnTimerItem(view: View): Unit {
+        val pos = timerList.getChildAdapterPosition(view)
+        adapt.addTimerAt(pos,0)
+        metaTimers.addTimerAt(0,pos)
+    }
+
 
 }
