@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.timer_item.view.*
 class MainActivity : AppCompatActivity() {
 
     private val metaTimers: MetaArrayListLong by lazy { ViewModelProviders.of(this).get(MetaArrayListLong::class.java) }
-    private val adapt = TimerAdapter()
+    private val adapt: TimerAdapter by lazy {TimerAdapter()}
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
             render()
             if (it <= 0) metaTimers.timerRunned.value = false
         })
-
     }
 
     private fun render(){
@@ -108,9 +107,3 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
-
-
-/*      val s: String = "true"
-        val myToast = Toast.makeText( this, s, Toast.LENGTH_SHORT )
-        myToast.show()
-        */
