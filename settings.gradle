@@ -1,2 +1,2 @@
-include ':app', ':testrecyclerview', ':testviewmodel'
+include ':app'
 rootProject.name='TimerList'
