@@ -1,7 +1,7 @@
 package arhdemetriy.timerlist
 
-import android.media.AudioManager
-import android.media.ToneGenerator
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -83,8 +83,12 @@ class MainActivity : AppCompatActivity() {
             return}
 
         else if (metaTimers.activeTimer.value <=0 ) {
-            val tg = ToneGenerator(AudioManager.STREAM_ALARM,100)
-            tg.startTone(ToneGenerator.TONE_CDMA_ABBR_ALERT,500)
+           /* val tg = ToneGenerator(AudioManager.STREAM_ALARM,100)
+            tg.startTone(ToneGenerator.TONE_CDMA_ABBR_ALERT,500)*/
+
+            var notify: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            var r = RingtoneManager.getRingtone(applicationContext, notify)
+            r.play()
         }
         metaTimers.timerTick()
     }
@@ -97,7 +101,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun clickOnMascineTimer(view: View): Unit {
-        Log.v("clickOnMascineTimer","step 0 ${view.toString()}")
+        Log.v("clickOnMascineTimer","step 0 $view")
         val pos = timerList.getChildAdapterPosition(view.parent as View)
         Log.v("clickOnMascineTimer","step 1 $pos")
         metaTimers.posMainTimer.value = pos

@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':testsoundnotify'
 rootProject.name='TimerList'
