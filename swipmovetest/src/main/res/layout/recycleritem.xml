@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/background_dark"
+    android:onClick="setFakeData">
+
+    <TextView
+        android:id="@+id/nameItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/marginL"
+        android:background="@android:color/holo_green_dark"
+        android:onClick="clearData"
+        android:text="@string/app_name"
+        android:textAlignment="center" />
+</RelativeLayout>
